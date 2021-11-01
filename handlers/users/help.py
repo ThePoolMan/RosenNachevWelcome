@@ -9,10 +9,10 @@ from loader import dp, bot
 
 @dp.message_handler(CommandHelp(), chat_type=ChatType.PRIVATE)
 async def bot_help(message: types.Message):
-    text = ("<b>Список команд: ",
-            "/start - Начать диалог",
-            "/help - Получить справку",
-            "/menu - Использовать меню бота</b>")
+    text = ("<b>Списък с команди: ",
+            "/start - Започнете диалог",
+            "/help - Извикай помощ",
+            "/menu - Използвайте менюто на ботовете</b>")
 
     await message.answer("\n".join(text))
 

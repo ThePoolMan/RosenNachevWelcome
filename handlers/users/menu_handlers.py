@@ -76,9 +76,9 @@ async def new_member(message):
 
     await message.reply(
         (
-            f"{user.get_mention(as_html=True)}, <b>добро пожаловать в чат!\n"
-            "Подтверди, что ты не бот, нажатием на одну из кнопок ниже\n"
-            "ВРЕМЯ ДЛЯ ОТВЕТА 25 СЕКУНД!</b>\n"
+            f"{user.get_mention(as_html=True)}, <b>Добре дошли в чата!\n"
+            "Потвърдете, че не сте бот, като щракнете върху един от бутоните по-долу\n"
+            "ВРЕМЕ ЗА ОТГОВОР 30 СЕКУНДИ!</b>\n"
 
         ),
         reply_markup=generate_confirm_markup(user.id, user_join_message_id)
@@ -126,14 +126,14 @@ async def chose_chats_for_delete(callback: CallbackQuery, _chosen, **kwargs):
         result.append({"id": _[0], "tittle": _[3], "chat_id": _[1]})
 
     markup = await delete_chats_check_keyboard(result, _chosen)
-    await callback.message.edit_text(text="<b>🗑Пожалуйста выберите чат для удаления</b>",
+    await callback.message.edit_text(text="<b>🗑Моля, изберете чат за изтриване</b>",
                                      reply_markup=markup)
 
 
 async def delete_chats_check(callback: CallbackQuery, _chosen, **kwargs):
     markup = await delete_chats_keyboard(_chosen)
 
-    await callback.message.edit_text(text="<b>🗑Вы точно хотите удалить?</b>",
+    await callback.message.edit_text(text="<b>🗑Сигурен ли си, че искаш да изтриеш?</b>",
                                      reply_markup=markup)
 
 
@@ -157,11 +157,11 @@ async def show_all_chats(callback: CallbackQuery, _chosen, _values, **kwargs):
 
     result = ""
     for _ in all_chats:
-        text = f"<b>Чат {_[3]}\nБот Добавлен: {_[2]}\n\n</b>"
+        text = f"<b>Чат {_[3]}\nДата на добавяне към чата {_[2]}\n\n</b>"
         result += text
 
     # Изменяем сообщение, и отправляем новые кнопки с подкатегориями
-    await callback.message.edit_text(text=f"<b>💬Список чатов\n\n{result}</b>", reply_markup=markup)
+    await callback.message.edit_text(text=f"<b>💬Списък на всички чатове\n\n{result}</b>", reply_markup=markup)
 
 
 # Функция, которая обрабатывает ВСЕ нажатия на кнопки в этой менюшке
@@ -219,7 +219,7 @@ async def callback_inline(query: types.CallbackQuery, callback_data: dict):
     if query.from_user.id != user_id:
         await bot.answer_callback_query(
             query.id,
-            text='Сообщение для другого пользователя! (This message for another user!)',
+            text='Съобщение за друг потребител! (This message for another user!)',
             show_alert=True
         )
         return
@@ -229,7 +229,7 @@ async def callback_inline(query: types.CallbackQuery, callback_data: dict):
     # далее, если пользователь выбрал кнопку "человек" сообщаем ему об этом
     if being == "human":
         logger.info(f"User: {query.from_user.id}, select human")
-        text = str("Вам открыт доступ в чат! You have access in our chat!")
+        text = str("Имате достъп до чата! You have access in our chat!")
         await bot.answer_callback_query(query.id,
                                         text=text,
                                         show_alert=True
@@ -245,7 +245,7 @@ async def callback_inline(query: types.CallbackQuery, callback_data: dict):
     # а если всё-таки бот, тоже отписываем и пропускаем, ибо только юзерботы могут жать на кнопки
     elif being == "bot":
         logger.info(f"User: {query.from_user.id}, select bot")
-        text = str("Вы бот вам закрыт доступ в чат! You are bot and access is closed in our chat!")
+        text = str("Ти си бот! Отказан ви е достъп до чата! You are bot and access is closed in our chat!")
 
         await bot.answer_callback_query(
             query.id,

@@ -26,7 +26,7 @@ def generate_confirm_markup(user_id: int, user_join_message_id: int) -> InlineKe
     confirm_user_markup.add(
         # кнопка "человек", в калбеке которой будет лежать confirm:human:<user_id>
         InlineKeyboardButton(
-            "Я человек",
+            "Аз съм човек",
             callback_data=user_callback.new(
                 being="human",
                 user_id=user_id,
@@ -35,7 +35,7 @@ def generate_confirm_markup(user_id: int, user_join_message_id: int) -> InlineKe
         ),
         # и кнопка "bot", в калбеке которой будет лежать confirm:bot:<user_id>
         InlineKeyboardButton(
-            "Я бот",
+            "Аз съм бот",
             callback_data=user_callback.new(
                 being="bot",
                 user_id=user_id,
@@ -54,7 +54,7 @@ async def menu_keyboard():
     markup = InlineKeyboardMarkup(row_width=3, column_width=2)
 
     # Сформируем текст, который будет на кнопке
-    button_text = ["💭Добавить чат", "🗯Удалить чат", "💬Все чаты"]
+    button_text = ["💭Добавете чат", "🗯Изтрийте чата", "💬Всички чатове"]
 
     # Сформируем колбек дату, которая будет на кнопке. Следующий уровень - текущий + 1, и перечисляем категории
     callback_data_del = make_callback_data(level="chose_chats_for_delete", chosen="delete_chats_check")
@@ -88,7 +88,7 @@ async def delete_chats_check_keyboard(chats, _chosen):
     # пользователя на уровень назад - на уровень 0.
     markup.row(
         InlineKeyboardButton(
-            text="↩НАЗАД",
+            text="↩ОБРАТНО",
             callback_data=make_callback_data(level="menu")
         )
     )
@@ -103,7 +103,7 @@ async def delete_chats_keyboard(_id):
     # Сформируем колбек дату, которая будет на кнопке. Следующий уровень - текущий + 1, и перечисляем категории
     markup.row(
         InlineKeyboardButton(
-            text="✅УДАЛИТЬ",
+            text="✅ИЗТРИЙ",
             callback_data=make_callback_data(level="delete_chat", chosen="yes", values=_id)
         )
     )
@@ -111,7 +111,7 @@ async def delete_chats_keyboard(_id):
     # пользователя на уровень назад - на уровень 0.
     markup.row(
         InlineKeyboardButton(
-            text="↩НАЗАД",
+            text="↩ОБРАТНО",
             callback_data=make_callback_data(level="delete_chat", chosen="no")
         )
     )
@@ -127,7 +127,7 @@ async def list_chats_keyboard():
     # пользователя на уровень назад - на уровень 0.
     markup.row(
         InlineKeyboardButton(
-            text="↩НАЗАД",
+            text="↩ОБРАТНО",
             callback_data=make_callback_data(level="menu")
         )
     )
