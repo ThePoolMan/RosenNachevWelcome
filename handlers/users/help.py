@@ -1,0 +1,21 @@
+import asyncio
+
+from aiogram import types
+from aiogram.dispatcher.filters.builtin import CommandHelp
+from aiogram.types import ChatType
+
+from loader import dp, bot
+
+
+@dp.message_handler(CommandHelp(), chat_type=ChatType.PRIVATE)
+async def bot_help(message: types.Message):
+    text = ("<b>Список команд: ",
+            "/start - Начать диалог",
+            "/help - Получить справку",
+            "/menu - Использовать меню бота</b>")
+
+    await message.answer("\n".join(text))
+
+    await message.delete()
+    await asyncio.sleep(5)
+    await bot.delete_message(message.chat.id, message.message_id + 1)
